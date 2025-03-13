@@ -1,5 +1,6 @@
 import "./style.css"
 import { render as renderHome } from "./home";
+import { render as renderAbout } from "./about";
 
 const pages = {
     options: ["Home", "Menu", "About"],
@@ -43,6 +44,8 @@ const renderContent = () => {
     switch (pages.current) {
         case "Home":
             return renderHome(content);
+        case "About":
+            return renderAbout(content);
         default:
             content.textContent = "";
     }

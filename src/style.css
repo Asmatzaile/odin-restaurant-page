@@ -22,6 +22,10 @@ button {
     font-family: 'Fira Mono', monospace;
 }
 
+.whitespace-pre-wrap {
+    white-space: pre-wrap;
+}
+
 :root {
     --color-black: #212529;
     --color-grey-dark: #6C757D;
@@ -100,5 +104,10 @@ header {
             font: inherit;
             max-width: min-content;
         }
+    }
+    &.about {
+        font-size: 36px;
+        line-height: 156%;
+        letter-spacing: 9%;
     }
 }
