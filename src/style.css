@@ -26,6 +26,50 @@ button {
     white-space: pre-wrap;
 }
 
+.uppercase {
+    text-transform: uppercase;
+}
+
+.lowercase {
+    text-transform: lowercase;
+}
+
+.text-16 {
+    font-size: 16px;
+}
+
+.text-24 {
+    font-size: 24px;
+}
+
+.text-32 {
+    font-size: 32px;
+}
+
+.font-light {
+    font-weight: 300;
+}
+
+.flex {
+    display: flex;
+}
+
+.gap-8 {
+    gap: 8px;
+}
+
+.justify-self-end {
+    justify-self: end;
+}
+
+.items-baseline {
+    align-items: baseline;
+}
+
+.max-w-read {
+    max-width: 80ch;
+}
+
 :root {
     --color-black: #212529;
     --color-grey-dark: #6C757D;
@@ -91,6 +135,7 @@ header {
     background-color: var(--color-page);
     width: fit-content;
     padding-inline: 100px;
+    padding-block: 20px;
     height: 100%;
     display: grid;
     place-content: center;
@@ -110,4 +155,23 @@ header {
         line-height: 156%;
         letter-spacing: 9%;
     }
+
+    .menu-content {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 40px;
+        .menu-item {
+            display: grid;
+            grid-column: 1 / -1;
+            row-gap: 2px;
+            grid-template-columns: subgrid;
+            .tag {
+                background-color: var(--color-badge);
+                padding-inline: 12px;
+                padding-block: 4px;
+                border-radius: 8px;
+            }
+        }
+    }
+
 }
