@@ -13,6 +13,10 @@ const pages = {
     get current() {return this._current}
 }
 
+let isScrambled = false;
+let scrambleController = undefined;
+let documentTitle;
+
 const createButton = (content, action) => {
     const button = document.createElement("button");
     button.textContent = content;
@@ -32,8 +36,24 @@ const createNav = () => {
 
 const header = document.querySelector("header");
 const digitButtonText = "01101010";
+const toggleScramble = () => {
+    if (!isScrambled) documentTitle = document.title;
+    isScrambled = !isScrambled;
+    if (isScrambled) {
+        scramble();
+        const id = setInterval(scramble, 100);
+        scrambleController = new AbortController;
+        scrambleController.signal.addEventListener("abort", () => clearInterval(id));
+    }
+    else {
+        scrambleController?.abort();
+        document.title = documentTitle;
+        render();
+    }
+}
+
 const renderHeader = () => {
-    const digitButton = createButton(digitButtonText);
+    const digitButton = createButton(digitButtonText, toggleScramble);
     digitButton.classList.add("font-mono", "rounded-full")
     const nav = createNav();
     header.textContent = "";
@@ -54,9 +74,27 @@ const renderContent = () => {
     }
 }
 
+function randomChar() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_";
+    return chars[Math.floor(Math.random() * chars.length)];
+}
+
+const scrambleString = string => string.split("").map(c => (c.match(/\w/) ? randomChar() : c)).join("");
+
+const scrambleNodeText = node => { // thanks for this, chattie
+    if (node.nodeType === Node.TEXT_NODE) node.nodeValue = scrambleString(node.nodeValue)
+    else node.childNodes.forEach(scrambleNodeText);
+}
+
+const scramble = () => {
+    scrambleNodeText(document.body);
+    document.title = scrambleString(document.title);
+}
+
 const render = () => {
     renderHeader();
     renderContent();
+    if (isScrambled) scramble();
 }
 
 render();
